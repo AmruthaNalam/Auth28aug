@@ -13,11 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Employee {
-    @Id
-    private Long id;
-    private String name;
-    private  String username;
-    private  String email;
-    private  String password;
+
 
 }
