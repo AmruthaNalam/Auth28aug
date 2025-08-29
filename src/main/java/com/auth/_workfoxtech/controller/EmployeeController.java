@@ -19,7 +19,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/signin")
-    public ResponseEntity<ResponseMessage>  Signin(@RequestBody SinginRequest singinRequest){
+    public ResponseEntity<SigninResponse>  Signin(@RequestBody SinginRequest singinRequest){
         return employeeService.signin(singinRequest);
     }
     @PostMapping("/signup")

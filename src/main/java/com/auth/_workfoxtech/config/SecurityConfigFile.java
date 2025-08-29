@@ -3,7 +3,6 @@ package com.auth._workfoxtech.config;
 import com.auth._workfoxtech.common.JwtFilterAuthentication;
 import com.auth._workfoxtech.dto.Role;
 import com.auth._workfoxtech.services.AuthServiceConfig;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
