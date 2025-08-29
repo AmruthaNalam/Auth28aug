@@ -1,11 +1,8 @@
 package com.auth._workfoxtech.services.ServiceImpl;
 
-import com.auth._workfoxtech.dto.EmployeeRequestDto;
 import com.auth._workfoxtech.repository.EmployeeRepository;
 import com.auth._workfoxtech.services.AuthServiceConfig;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

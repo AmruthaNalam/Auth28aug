@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JwtAuthenticationResponse {
-    private String token;
-    private String refreshtoken;
+public class UpdatePasswordRequest {
+    private String currentPassword;
+    private String newPassword;
 }

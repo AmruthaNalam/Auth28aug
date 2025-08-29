@@ -19,7 +19,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/signin")
-    public ResponseEntity<ResponseMessage>  Signin(@RequestBody SinginRequest singinRequest){
+    public ResponseEntity<SigninResponse>  Signin(@RequestBody SinginRequest singinRequest){
         return employeeService.signin(singinRequest);
     }
     @PostMapping("/signup")
@@ -30,6 +30,10 @@ public class EmployeeController {
     @GetMapping("/refresh")
     public ResponseEntity<ResponseMessage> refreshtoken(@RequestBody @Valid RefreshTokenRequest refreshTokenRequest){
         return employeeService.refreshToken(refreshTokenRequest);
+    }
+    @PostMapping("/update")
+    public ResponseEntity<ResponseMessage> updatePassword(@RequestParam String email,@RequestBody @Valid UpdatePasswordRequest updatePasswordRequest){
+        return employeeService.updatePassword(email,updatePasswordRequest);
     }
 
 

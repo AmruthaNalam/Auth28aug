@@ -16,6 +16,7 @@ public class ConstantMessage {
     public static final String SOMETHING_WENT_WRONG="Something went wrong please try again later";
     public static final String INVALID_PASSWORD="Please enter the correct current password";
     public static final String PASSWORD_UPDATED="Password Updated SuccessFully";
+    public static final String SAME_PASSWORD="Current Password and New Password Cannot be same";
 
     public static final Integer AE_UNAUTHORIZED = 401;
     public static final Integer AE_BAD_CREDENTIALS = 401;
