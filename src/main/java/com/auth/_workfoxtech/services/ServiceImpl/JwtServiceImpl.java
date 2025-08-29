@@ -33,6 +33,7 @@ public class JwtServiceImpl implements JwtService {
         return Jwts.builder().setSubject(userDetails.getUsername()).setIssuedAt(issuedAt)
                 .setExpiration(date).signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
+
     @Override
     public String extractUsername(String token){
         return extractClaims(token, Claims::getSubject);
@@ -63,7 +64,6 @@ public class JwtServiceImpl implements JwtService {
         }
     }
 
-
     @Override
     public boolean isTokenValid(String token,UserDetails userDetails){
         final String username=extractUsername(token);
@@ -75,7 +75,6 @@ public class JwtServiceImpl implements JwtService {
         long now=System.currentTimeMillis();
         Date issuedAt=new Date(now);
         Date expiraryDate=new Date(now + jwtExp);
-        System.out.println(issuedAt +" "+ expiraryDate+ " "+ jwtExp);
         return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername()).setIssuedAt(issuedAt)
                 .setExpiration(expiraryDate).signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }

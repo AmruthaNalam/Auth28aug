@@ -1,7 +1,6 @@
 package com.auth._workfoxtech.common;
 
 import com.auth._workfoxtech.services.AuthServiceConfig;
-import com.auth._workfoxtech.services.EmployeeService;
 import com.auth._workfoxtech.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,7 +15,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 
 @Component

@@ -59,11 +59,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return null;
     }
     @Override
-    public ResponseEntity<ResponseMessage>  signin(SinginRequest singinRequest) {
+    public ResponseEntity<SigninResponse>  signin(SinginRequest singinRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(singinRequest.getEmail(), singinRequest.getPassword()));
         } catch (AuthenticationException ex) {
-            return new ResponseEntity<>(new ResponseMessage(ConstantMessage.AE_UNAUTHORIZED,List.of(),ConstantMessage.BAD_CREDENTIALS),HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new SigninResponse(ConstantMessage.AE_UNAUTHORIZED," ",ConstantMessage.BAD_CREDENTIALS,List.of()),HttpStatus.UNAUTHORIZED);
         }
         var employee=employeeRepository.findByEmail(singinRequest.getEmail()).orElseThrow(()->new IllegalArgumentException("Please Provide Valid Email or Password"));
         var jwt=jwtService.generateToken(employee);
@@ -71,6 +71,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         JwtAuthenticationResponse jwtAuthenticationResponse=new JwtAuthenticationResponse();
         jwtAuthenticationResponse.setToken(jwt);
         jwtAuthenticationResponse.setRefreshtoken(refreshtoken);
-        return new ResponseEntity<>(new ResponseMessage(ConstantMessage.AE_LOGIN_SUCCESS,List.of(jwtAuthenticationResponse),ConstantMessage.LOGIN_SUCCESS),HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(new SigninResponse(ConstantMessage.AE_LOGIN_SUCCESS,employee.getRole().name(),ConstantMessage.LOGIN_SUCCESS,List.of(jwtAuthenticationResponse)),HttpStatus.ACCEPTED);
+    }
+
+    @Override
+    public ResponseEntity<ResponseMessage> updatePassword(String email, UpdatePasswordRequest updatePasswordRequest) {
+        Employee employee=employeeRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("please provide valid token"));
+        if(!passwordEncoder.matches(updatePasswordRequest.getCurrentPassword(),employee.getPassword())){
+            return new ResponseEntity<>(new ResponseMessage(ConstantMessage.AE_UNAUTHORIZED,List.of(),ConstantMessage.INVALID_PASSWORD),HttpStatus.UNAUTHORIZED);
+        }
+        if(passwordEncoder.matches(updatePasswordRequest.getNewPassword(),employee.getPassword())){
+            return new ResponseEntity<>(new ResponseMessage(HttpStatus.BAD_GATEWAY.value(), List.of(),ConstantMessage.SAME_PASSWORD),HttpStatus.BAD_REQUEST);
+        }
+        employee.setPassword(passwordEncoder.encode(updatePasswordRequest.getNewPassword()));
+        employeeRepository.save(employee);
+        return new ResponseEntity<>(new ResponseMessage(ConstantMessage.AE_LOGIN_SUCCESS,List.of(),ConstantMessage.PASSWORD_UPDATED),HttpStatus.ACCEPTED);
     }
 }
