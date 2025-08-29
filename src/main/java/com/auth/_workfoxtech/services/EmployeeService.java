@@ -2,6 +2,7 @@ package com.auth._workfoxtech.services;
 
 import com.auth._workfoxtech.dto.*;
 import com.auth._workfoxtech.entitiy.Employee;
+import com.auth._workfoxtech.util.ResponseMessage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,10 +13,10 @@ public interface EmployeeService {
 
 
 
-     Employee signUp(SignUpRequest signUpRequest);
+     ResponseEntity<ResponseMessage>  signUp(SignUpRequest signUpRequest);
 
-     JwtAuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest);
+     ResponseEntity<ResponseMessage>  refreshToken(RefreshTokenRequest refreshTokenRequest);
 
-     JwtAuthenticationResponse signin(SinginRequest singinRequest);
+     ResponseEntity<ResponseMessage>  signin(SinginRequest singinRequest);
 
 }
