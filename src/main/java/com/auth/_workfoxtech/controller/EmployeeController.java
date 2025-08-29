@@ -31,6 +31,10 @@ public class EmployeeController {
     public ResponseEntity<ResponseMessage> refreshtoken(@RequestBody @Valid RefreshTokenRequest refreshTokenRequest){
         return employeeService.refreshToken(refreshTokenRequest);
     }
+    @PostMapping("/update")
+    public ResponseEntity<ResponseMessage> updatePassword(@RequestParam String email,@RequestBody @Valid UpdatePasswordRequest updatePasswordRequest){
+
+    }
 
 
 }
