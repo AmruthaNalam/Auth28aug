@@ -73,4 +73,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         jwtAuthenticationResponse.setRefreshtoken(refreshtoken);
         return new ResponseEntity<>(new ResponseMessage(ConstantMessage.AE_LOGIN_SUCCESS,List.of(jwtAuthenticationResponse),ConstantMessage.LOGIN_SUCCESS),HttpStatus.ACCEPTED);
     }
+
+    @Override
+    public ResponseEntity<ResponseMessage> updatePassword(String email, UpdatePasswordRequest updatePasswordRequest) {
+        Employee employee=employeeRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("please provide valid token"));
+        if(!passwordEncoder.matches(updatePasswordRequest.getCurrentPassword(),employee.getPassword())){
+            return new ResponseEntity<>(new ResponseMessage(ConstantMessage.AE_UNAUTHORIZED,List.of(),ConstantMessage.INVALID_PASSWORD),HttpStatus.UNAUTHORIZED);
+        }
+        if(passwordEncoder.matches(updatePasswordRequest.getNewPassword(),employee.getPassword())){
+            return new ResponseEntity<>(new ResponseMessage(HttpStatus.BAD_GATEWAY.value(), List.of(),ConstantMessage.SAME_PASSWORD),HttpStatus.BAD_REQUEST);
+        }
+        employee.setPassword(passwordEncoder.encode(updatePasswordRequest.getNewPassword()));
+        employeeRepository.save(employee);
+        return new ResponseEntity<>(new ResponseMessage(ConstantMessage.AE_LOGIN_SUCCESS,List.of(),ConstantMessage.PASSWORD_UPDATED),HttpStatus.ACCEPTED);
+    }
 }

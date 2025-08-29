@@ -33,7 +33,7 @@ public class EmployeeController {
     }
     @PostMapping("/update")
     public ResponseEntity<ResponseMessage> updatePassword(@RequestParam String email,@RequestBody @Valid UpdatePasswordRequest updatePasswordRequest){
-
+        return employeeService.updatePassword(email,updatePasswordRequest);
     }
 
 

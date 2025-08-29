@@ -20,5 +20,6 @@ public interface EmployeeService {
      ResponseEntity<ResponseMessage>  refreshToken(RefreshTokenRequest refreshTokenRequest);
 
      ResponseEntity<ResponseMessage>  signin(SinginRequest singinRequest);
+     ResponseEntity<ResponseMessage> updatePassword(String email,UpdatePasswordRequest updatePasswordRequest);
 
 }
