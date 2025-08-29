@@ -2,6 +2,7 @@ package com.auth._workfoxtech.services.ServiceImpl;
 
 import com.auth._workfoxtech.services.JwtService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -27,8 +28,10 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public String generateToken(UserDetails userDetails){
         long now=System.currentTimeMillis();
-        Date date=new Date(now+jwtExp);
-        return Jwts.builder().setSubject(userDetails.getUsername()).setIssuedAt(new Date(now))
+        Date issuedAt=new Date(now);
+        Date date=new Date(now + jwtExp);
+        System.out.println(issuedAt +" "+ date);
+        return Jwts.builder().setSubject(userDetails.getUsername()).setIssuedAt(issuedAt)
                 .setExpiration(date).signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
     @Override
@@ -46,8 +49,22 @@ public class JwtServiceImpl implements JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJwt(token).getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSignKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            System.out.println("Token expired at: {}"+ e.getClaims().getExpiration());
+            throw e;
+        } catch (Exception e) {
+            System.out.println("Token parsing failed: {}"+ e.getMessage());
+            throw e;
+        }
     }
+
+
     @Override
     public boolean isTokenValid(String token,UserDetails userDetails){
         final String username=extractUsername(token);
@@ -56,8 +73,12 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String generateRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(jwtExp)).signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+        long now=System.currentTimeMillis();
+        Date issuedAt=new Date(now);
+        Date expiraryDate=new Date(now + jwtExp);
+        System.out.println(issuedAt +" "+ expiraryDate+ " "+ jwtExp);
+        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername()).setIssuedAt(issuedAt)
+                .setExpiration(expiraryDate).signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 
     private boolean isTokenExperied(String token){

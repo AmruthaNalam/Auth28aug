@@ -1,9 +1,6 @@
 package com.auth._workfoxtech.controller;
 
-import com.auth._workfoxtech.dto.EmployeeRequestDto;
-import com.auth._workfoxtech.dto.JwtAuthenticationResponse;
-import com.auth._workfoxtech.dto.SignUpRequest;
-import com.auth._workfoxtech.dto.SinginRequest;
+import com.auth._workfoxtech.dto.*;
 import com.auth._workfoxtech.entitiy.Employee;
 import com.auth._workfoxtech.services.EmployeeService;
 import com.auth._workfoxtech.util.ResponseMessage;
@@ -29,10 +26,10 @@ public class EmployeeController {
         return employeeService.signUp(signUpRequest);
     }
 
-//    @GetMapping("/refresh")
-//    public ResponseEntity<JwtAuthenticationResponse> refreshtoken(@RequestBody @Valid RefreshTokenRequest refreshTokenRequest){
-//        return ResponseEntity.ok(authenticationService.refreshToken(refreshTokenRequest));
-//    }
+    @GetMapping("/refresh")
+    public ResponseEntity<ResponseMessage> refreshtoken(@RequestBody @Valid RefreshTokenRequest refreshTokenRequest){
+        return employeeService.refreshToken(refreshTokenRequest);
+    }
 
 
 }
