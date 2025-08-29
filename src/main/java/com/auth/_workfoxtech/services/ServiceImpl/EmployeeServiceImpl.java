@@ -6,6 +6,7 @@ import com.auth._workfoxtech.repository.EmployeeRepository;
 import com.auth._workfoxtech.services.EmployeeService;
 import com.auth._workfoxtech.services.JwtService;
 import com.auth._workfoxtech.util.ResponseMessage;
+import com.auth._workfoxtech.util.SigninResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
