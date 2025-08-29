@@ -30,7 +30,6 @@ public class JwtServiceImpl implements JwtService {
         long now=System.currentTimeMillis();
         Date issuedAt=new Date(now);
         Date date=new Date(now + jwtExp);
-        System.out.println(issuedAt +" "+ date);
         return Jwts.builder().setSubject(userDetails.getUsername()).setIssuedAt(issuedAt)
                 .setExpiration(date).signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
