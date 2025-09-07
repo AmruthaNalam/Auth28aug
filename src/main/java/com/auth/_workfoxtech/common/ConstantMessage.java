@@ -17,6 +17,10 @@ public class ConstantMessage {
     public static final String INVALID_PASSWORD="Please enter the correct current password";
     public static final String PASSWORD_UPDATED="Password Updated SuccessFully";
     public static final String SAME_PASSWORD="Current Password and New Password Cannot be same";
+    public static final String OTP_GENERATED="OTP Generated SuccessFully";
+    public static final String OTP_VALIDATED="OTP Validated Successfully";
+    public static final String OTP_INVALID="Please Enter the Valid Otp";
+    public static final String EmailId_NotExisted="Please Enter the Valid Email Id";
 
     public static final Integer AE_UNAUTHORIZED = 401;
     public static final Integer AE_BAD_CREDENTIALS = 401;
