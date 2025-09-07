@@ -9,4 +9,5 @@ public interface EmployeeService {
      ResponseEntity<ResponseMessage>  refreshToken(RefreshTokenRequest refreshTokenRequest);
      ResponseEntity<SigninResponse>  signin(SinginRequest singinRequest);
      ResponseEntity<ResponseMessage> updatePassword(String email,UpdatePasswordRequest updatePasswordRequest);
+     ResponseEntity<ResponseMessage> updatePasswordAfterOtp(String email,UpdatePasswordAfterValidOtpRequest updatePasswordAfterValidOtpRequest);
 }

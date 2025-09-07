@@ -1,7 +1,5 @@
 package com.auth._workfoxtech.controller;
-
 import com.auth._workfoxtech.dto.*;
-import com.auth._workfoxtech.entitiy.Employee;
 import com.auth._workfoxtech.services.EmployeeService;
 import com.auth._workfoxtech.services.OtpTokenService;
 import com.auth._workfoxtech.services.ServiceImpl.EmailServiceImpl;
@@ -9,7 +7,6 @@ import com.auth._workfoxtech.util.ResponseMessage;
 import com.auth._workfoxtech.util.SigninResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,9 +41,13 @@ public class EmployeeController {
     public ResponseEntity<ResponseMessage> generateOtp(@RequestParam String email){
         return otpTokenService.generateOtp(email,emailService);
     }
+    @PostMapping("/updatePassword")
+    public ResponseEntity<ResponseMessage> updatePasswordAfterOtp(@RequestParam String email,@RequestBody @Valid UpdatePasswordAfterValidOtpRequest updatePasswordAfterValidOtpRequest){
+        return employeeService.updatePasswordAfterOtp(email,updatePasswordAfterValidOtpRequest);
+    }
 
     @GetMapping("/validateOtp")
-    public ResponseEntity<ResponseMessage> validateOtp(@RequestBody OtpValidDto otpValidDto){
+    public ResponseEntity<ResponseMessage> validateOtp(@RequestBody @Valid OtpValidDto otpValidDto){
         return otpTokenService.validateOtp(otpValidDto);
     }
 
